@@ -88,6 +88,15 @@ fn main() {
         println!("array element={}", element);
     }
 
+    let mut n1 = 0;
+//    for n in 1..101 {
+    for n in 1..=100 {
+        if n == 50 {
+            println!("n={}", n);
+        }
+        n1 = n;
+    }
+    println!("n1={}", n1);
 }
 
 fn func1(value: i32, label: char){
