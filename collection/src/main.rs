@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 fn main() {
     println!("---vector---");
 
@@ -29,4 +31,19 @@ fn main() {
     for k in v.iter() {
         println!("val={}", k);
     }
+
+    println!("---HashMap---");
+
+    let mut scores = HashMap::new();
+        
+    scores.insert(String::from("Blue"), 10);
+    scores.insert(String::from("Yellow"), 50);    
+     
+    for (key3, val3) in &scores {
+        println!("{} : {}", key3, val3);
+    }
+        
+    scores.insert(String::from("Blue"), 25);
+    scores.entry(String::from("Blue2")).or_insert(100);
+    println!("{:?}", scores);
 }
