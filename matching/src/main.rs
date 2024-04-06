@@ -22,4 +22,26 @@ fn main() {
     println!("Some num={:?}", some_string);
     let absent_number : Option<i32> = None;
     println!("None num={:?}", absent_number);
+
+    println!("-----if let-----");
+    let some_u8_value = Some(3);
+    match some_u8_value {
+        Some(3) => callsome3(),
+        _ => callother()
+    }
+
+    if let Some(3) = some_u8_value {
+        callsome3();
+    }
+
+}
+
+fn callsome3()
+{
+    println!("called callsome3()");
+}
+
+fn callother()
+{
+    println!("called callother()");
 }
