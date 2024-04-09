@@ -1,3 +1,6 @@
+//////////////////////////////////////////////////////////////////
+//
+//
 pub trait Summary {
     fn summarize(&self) -> String;
 }
@@ -28,6 +31,43 @@ impl Summary for Tweet {
     }
 }
 
+//////////////////////////////////////////////////////////////////
+//
+//
+struct Sheep {
+    naked: bool,
+    name: &'static str
+}
+
+trait Animal {
+    fn new(name: &'static str) -> Self;
+    
+    fn name(&self) -> &'static str;
+    
+    fn talk(&self){
+        println!("Animal::talk");
+    }
+}
+
+impl Sheep {
+    fn shear(&mut self){
+        println!("{}", self.name());
+    }
+}
+
+impl Animal for Sheep {
+    fn new(name: &'static str) -> Sheep {
+        Sheep { name: name, naked: false }
+    }
+    
+    fn name(&self) -> &'static str {
+        self.name
+    }
+}
+
+//////////////////////////////////////////////////////////////////
+//
+//
 fn main() {
     println!("---trait---");
 
@@ -39,4 +79,13 @@ fn main() {
     };
 
     println!("I new tweet: {}", tweet.summarize());
+
+    println!("-----trait example-----");
+    
+    let mut dolly: Sheep = Animal::new("Dolly");
+ 
+    dolly.talk();
+    dolly.shear();
+
+    println!("{} {}", dolly.name, dolly.naked);
 }
