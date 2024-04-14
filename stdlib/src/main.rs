@@ -18,7 +18,7 @@ fn boxed_origin() -> Box<Point> {
     Box::new(Point {x: 0.0, y: 0.0})
 }
 
-fn main() {
+fn stdbox() {
     println!("-----Box-----");
     
     // allocated on stack
@@ -50,10 +50,12 @@ fn main() {
     println!("Unboxed point occupies {} bytes on the stack", mem::size_of_val(&unboxed_point));
     let unboxed_rectangle: Rectangle = *boxed_rectangle;
     println!("Unboxed point occupies {} bytes on the stack", mem::size_of_val(&unboxed_rectangle));
+}
 
-    ////////////////////////////////////////////////////
-    //
-    //    
+////////////////////////////////////////////////////
+//
+//        
+fn stdvector(){
     println!("---vector---");
 
     let collected_iterator: Vec<i32> = (0..10).collect();
@@ -80,4 +82,47 @@ fn main() {
     }
     println!("modified vector = {:?}, Length={}", xs, xs.len());
 
+}
+
+fn stdstring()
+{
+    println!("-----String-----");
+
+    let pangram: &'static str = "the quick brown fox jumps over the lazy dog";
+    println!("Pangram: {}", pangram);
+
+    for word in pangram.split_whitespace().rev(){
+        println!("> {}", word);
+    }
+
+    let mut chars: Vec<char> = pangram.chars().collect();
+    println!("chars: {:?}", chars);
+    chars.sort();
+    println!("chars: {:?}", chars);
+    chars.dedup();
+    println!("chars: {:?}", chars);
+
+    let mut string = String::new();
+    for c in chars {
+        string.push(c);
+        string.push_str(", ");
+    }
+    println!("string: {}",string);
+
+    let chars_to_trim: &[char] = &[' ',','];
+    let trimmed_str: &str = string.trim_matches(chars_to_trim);
+    println!("Used char: {}", trimmed_str);
+
+    let alice = String::from("I like dogs");
+    let bob: String = alice.replace("dog","cat");
+
+    println!("alice: {}", alice);
+    println!("bob: {}", bob);
+}
+
+fn main() {
+    println!("-----Start-----");
+    stdbox();
+    stdvector();
+    stdstring();
 }
