@@ -2,6 +2,7 @@ use std::env;
 use std::fs::File;
 use std::io::prelude::*;
 use std::process;
+use std::error::Error;
 
 fn main() {
     println!("---start---");
@@ -15,21 +16,27 @@ fn main() {
         process::exit(1);
     });
 
-    let query = config.query;
-    let filename = config.filename;
+    println!("Searching for {}", config.query);
 
-    println!("Searching for {}", query);
+    println!("In file {}", config.filename);
 
-    println!("In file {}", filename);
+    if let Err(e) = run(config){
+        println!("Application error: {}", e);
+        process::exit(1);
+    }
 
-    let mut f = File::open(filename).expect("file not found");
+    println!("---end---");
+}
+
+fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    let mut f = File::open(config.filename).expect("file not found");
 
     let mut contents = String::new();
     f.read_to_string(&mut contents).expect("file read error");
 
     println!("With text:\n{}", contents);
 
-    println!("---end---");
+    Ok(())
 }
 
 struct Config {
