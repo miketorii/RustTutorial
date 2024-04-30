@@ -4,8 +4,8 @@ enum Foo {
     Qux(u32)
 }
 
-fn main() {
-    println!("---Start---");
+fn iflet() {
+    println!("---Start if let---");
 
     let a = Foo::Bar;
     let b = Foo::Baz;
@@ -26,5 +26,33 @@ fn main() {
     if let Foo::Qux(_value @ 100) = c {
         println!("c is one hundred");
     }
+    println!("---End if let---");
+}
+
+fn whilelet() {
+    println!("---Start while let---");
+
+    let mut optional = Some(0);
+    
+    while let Some(i) = optional {
+        if i > 9 {
+            println!("Greater than 9 quit");
+            optional = None;
+        } else {
+            println!("i is {:?}", i);
+            optional = Some(i+1);
+        }
+    }
+
+    println!("---End while let---");
+}
+
+fn main() {
+    println!("---Start---");
+
+    iflet();
+
+    whilelet();
+    
     println!("---End---");
 }
