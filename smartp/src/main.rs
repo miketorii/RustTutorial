@@ -44,7 +44,7 @@ struct MyPtr {
 
 impl Drop for MyPtr {
     fn drop(&mut self){
-        println!("dropping MyPtr in drop()");
+        println!("dropping MyPtr in drop() : {}", self.data);
     }
 }
 fn droptrait()
@@ -54,6 +54,14 @@ fn droptrait()
     let c = MyPtr { data: String::from("my stuff")};
     let d = MyPtr { data: String::from("other stuff")};
     println!("created MyPtr");
+
+    println!("---created some stuff---");
+    let e = MyPtr { data: String::from("some stuff") };
+    println!("before calling drop()");
+    drop(e);
+    println!("drop() was called");
+
+    println!("---End: drop trait---");
 }
 
 fn main() {
