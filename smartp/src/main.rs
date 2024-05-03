@@ -36,10 +36,31 @@ fn dereftrait()
     hello(&m);
 }
 
+//////////////////////////////////////////////
+//
+struct MyPtr {
+    data: String,
+}
+
+impl Drop for MyPtr {
+    fn drop(&mut self){
+        println!("dropping MyPtr in drop()");
+    }
+}
+fn droptrait()
+{
+    println!("---drop trait---");
+
+    let c = MyPtr { data: String::from("my stuff")};
+    let d = MyPtr { data: String::from("other stuff")};
+    println!("created MyPtr");
+}
+
 fn main() {
     println!("---Start---");
 
     dereftrait();
+    droptrait();
 
     println!("---End---");
 }
