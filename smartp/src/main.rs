@@ -1,4 +1,5 @@
 use std::ops::Deref;
+use std::rc::Rc;
 
 struct MyBox<T>(T);
 
@@ -64,11 +65,37 @@ fn droptrait()
     println!("---End: drop trait---");
 }
 
+//////////////////////////////////////////////
+//
+fn rcbehave()
+{
+    println!("---Rc behave---");
+
+    let rc_examples = "Rc examples".to_string();
+
+    let rc_a: Rc<String> = Rc::new(rc_examples);
+    println!("ref count rc_a: {}", Rc::strong_count(&rc_a) );
+
+    {
+        let rc_b: Rc<String> = Rc::clone(&rc_a);
+        println!("ref count rc_b: {}", Rc::strong_count(&rc_b) );
+        println!("ref count rc_a: {}", Rc::strong_count(&rc_a) );
+
+        println!("rc_a = rc_b : {}", rc_a.eq(&rc_b));
+
+        println!("rc_a length = {}", rc_a.len());
+        println!("rc_b val = {}", rc_b);
+    }
+
+    println!("ref count rc_a: {}", Rc::strong_count(&rc_a) );
+}
+
 fn main() {
     println!("---Start---");
 
     dereftrait();
     droptrait();
+    rcbehave();
 
     println!("---End---");
 }
