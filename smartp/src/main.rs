@@ -1,5 +1,10 @@
 use std::ops::Deref;
+
 use std::rc::Rc;
+
+use std::time::Duration;
+use std::sync::Arc;
+use std::thread;
 
 struct MyBox<T>(T);
 
@@ -90,12 +95,34 @@ fn rcbehave()
     println!("ref count rc_a: {}", Rc::strong_count(&rc_a) );
 }
 
+//////////////////////////////////////////////
+//
+fn arcbehave()
+{
+    println!("---Arc behave---");
+
+    let apple = Arc::new("the same apple");
+
+    for _ in 0..10 {
+        let apple1 = Arc::clone(&apple);
+
+        thread::spawn(move || {
+            println!("{:?} : ref count={}", apple1, Arc::strong_count(&apple1) );
+        } );
+    }
+
+    thread::sleep(Duration::from_secs(1));
+}
+
+//////////////////////////////////////////////
+//
 fn main() {
     println!("---Start---");
 
     dereftrait();
     droptrait();
     rcbehave();
+    arcbehave();
 
     println!("---End---");
 }
